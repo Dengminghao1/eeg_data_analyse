@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Server-Sent Events</title>
+</head>
+<body>
+    <div id="content">
+        <h1>Server-Sent Events</h1>
+        <p>time: <span id="time_show"></span></p>
+    </div>
+</body>
+<script>
+    function connectSSE() {
+        if (window.EventSource) {
+            let sse_url = 'http://localhost:5678/sse';
+            // 创建 EventSource 对象连接服务器
+            const source = new EventSource(sse_url);
+
+            // 连接成功后会触发 open 事件
+            source.addEventListener('open', () => {
+                console.log('Connected');
+            }, false);
+
+            // 当接收到服务器端发送的数据时会触发 time_reading 事件
+            source.addEventListener('time_reading', function (e) {
+                console.log("time_reading", e.data);
+                // 把时间显示到页面上，这里需要解析一下 JSON
+                document.getElementById("time_show").innerHTML = JSON.parse(e.data).time;
+            }, false);
+
+            // 服务器发送信息到客户端时，如果没有 event 字段，默认会触发 message 事件
+            source.addEventListener('message', e => {
+                console.log(`data: ${e.data}`);
+            }, false);
+
+            // 连接异常时会触发 error 事件并自动重连
+            source.addEventListener('error', e => {
+                if (e.target.readyState === EventSource.CLOSED) {
+                    console.log('Disconnected');
+                } else if (e.target.readyState === EventSource.CONNECTING) {
+                    console.log('Connecting...');
+                }
+            }, false);
+        } else {
+            console.error('Your browser doesn\'t support SSE');
+        }
+    }
+
+    connectSSE();
+</script>
+</html>

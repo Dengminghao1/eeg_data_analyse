@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>>SSE 示例</title>
+</head>
+<body>
+    <h1>实时消息</h1>
+    <ul id="messages"></ul>
+
+    <script>
+        if (typeof(EventSource) !== "undefined") {
+            var source = new EventSource("http://10.131.222.134:5000/sse/abc");
+            // 设置source.onmessage事件处理器，当从服务器接收到消息时触发。
+            source.onmessage = function(event) {
+                // 在事件处理器中，创建一个新的 <li> 元素。
+                var li = document.createElement("li");
+                // 将接收到的消息内容设置为 <li> 元素的文本内容。
+                li.textContent = event.data;
+                // 将新创建的 <li> 元素追加到页面上的 <ul> 元素（ID 为 messages）中。
+                document.getElementById('messages').appendChild(li);
+            };
+            source.onerror = function(event) {
+                console.error("EventSource error:", event);
+            };
+        } else {
+            // SSE 不支持的情况下的处理
+            document.write("您的浏览器不支持Server-Sent Events!");
+        }
+    </script>
+</body>
+</html>
+
