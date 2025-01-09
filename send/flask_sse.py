@@ -3,9 +3,9 @@ import time
 from datetime import datetime, timedelta
 
 from flask import Flask, Response
-from flask_cors import CORS  # 导入 CORS
-import time
+
 from Eeg.utils import calculate_cognitive, test_start_time, test_end_time, trans_to_json
+
 # start_time = (datetime.now() - timedelta(seconds=9)).strftime('%Y-%m-%d %H:%M:%S')
 # end_time = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
 app = Flask(__name__)

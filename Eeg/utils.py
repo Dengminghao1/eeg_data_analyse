@@ -14,24 +14,24 @@ plt.rcParams['axes.unicode_minus'] = False  # 用来正常显示负号 #有中�
 
 path = r'eeg.txt'
 
-db_config = {"host": "10.131.164.180",  # 数据库服务器地址
+db_config = {"host": "10.131.10.108",  # 数据库服务器地址
              "user": "root",  # 数据库用户名
              "password": "123123",  # 数据库密码
              "database": "ebmgpt"  # 要连接的数据库名称
              }
-db_config_tome= {"host": "10.131.222.134",  # 数据库服务器地址
-             "user": "root",  # 数据库用户名
-             "password": "123456",  # 数据库密码
-             "database": "ebmgpt"  # 要连接的数据库名称
-             }
-# start_time = (datetime.now() - timedelta(minutes=1)).strftime('%Y-%m-%d %H:%M:%S')
-# end_time = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+# db_config_tome= {"host": "10.131.222.134",  # 数据库服务器地址
+#              "user": "root",  # 数据库用户名
+#              "password": "123456",  # 数据库密码
+#              "database": "ebmgpt"  # 要连接的数据库名称
+#              }
+start_time = (datetime.now() - timedelta(seconds=10)).strftime('%Y-%m-%d %H:%M:%S')
+end_time = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
 
 # start_time = (datetime.now()-timedelta(minutes=1))
 # end_time = datetime.now()
 
-test_start_time = '2024-09-20 15:18:21'
-test_end_time = '2024-09-20 15:18:31'
+test_start_time = '2024-10-12 17:39:48'
+test_end_time = '2024-10-12 17:39:58'
 
 
 def getTimestamp(realTime: str):
@@ -43,7 +43,7 @@ def getTimestamp(realTime: str):
 
 def eeg_calculate(start_time: str, end_time: str):
     all_dicts_list = []
-    conn = mysql.connector.connect(**db_config_tome)
+    conn = mysql.connector.connect(**db_config)
     cursor = conn.cursor()
     sql = "SELECT * FROM eeg   WHERE time BETWEEN %s AND %s ORDER BY time DESC"
     cursor.execute(sql, (start_time, end_time))
@@ -348,6 +348,7 @@ if __name__ == '__main__':
     #         time.sleep(10)
     # # # eeg_crop.replace(to_replace=0, value=median, inplace=False)
     # # print(eeg_crop)
-    a, b = calculate_cognitive(start_time, end_time)
+    # a, b = calculate_cognitive(start_time, end_time)
+    a, b = calculate_cognitive(test_start_time, test_end_time)
     result=trans_to_json(a, b)
     print(result)

@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/CPS_AGI_AGENT.iml" filepath="$PROJECT_DIR$/.idea/CPS_AGI_AGENT.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/eeg_data_analyse.iml" filepath="$PROJECT_DIR$/.idea/eeg_data_analyse.iml" />
     </modules>
   </component>
 </project>
